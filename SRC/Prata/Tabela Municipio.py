@@ -1,0 +1,36 @@
+
+from pathlib import Path
+import requests
+import pandas as pd
+import pyarrow
+
+
+### Definindo as camadas:
+ARQUIVO_BRONZE = Path("C:\\Projeto 3 FT\\DATA\\Bronze") 
+ARQUIVO_PRATA = Path("C:\\Projeto 3 FT\\DATA\\Prata") 
+
+   
+# ################### Função para extrair os municpios
+def parquet_municipios():
+
+    caminho_arquivo_municipios = ARQUIVO_BRONZE / "municipios_bruto_IBGE.parquet"
+    dados = pd.read_parquet(caminho_arquivo_municipios)
+
+    return dados
+
+# ###############  executando a função de salvar os dados em parquet na camada bronze 
+if __name__ == "__main__":
+
+    df_municipio = parquet_municipios()
+    df_municipio = pd.json_normalize(df_municipio.to_dict(orient="records"))
+    df_municipio = df_municipio.rename(columns={"id": "id_municipio", "nome": "nome_municipio" , "microrregiao.mesorregiao.UF.id":"id_uf"})
+    df_municipio = df_municipio[["id_municipio", "nome_municipio" , "id_uf"]]
+    #Tratamento de dados:
+    df_municipio["id_municipio"] = pd.to_numeric(df_municipio["id_municipio"], errors="coerce").astype("Int64")
+    df_municipio["id_uf"] = pd.to_numeric(df_municipio["id_uf"], errors="coerce").astype("Int64") 
+# ##### Salvando o arquivo em parquet na camada prata
+    df_municipio.to_parquet(ARQUIVO_PRATA / "municipios.parquet", index=False)
+    print(df_municipio)
+
+    
+
