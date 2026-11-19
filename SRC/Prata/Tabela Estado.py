@@ -33,3 +33,4 @@ if __name__ == "__main__":
 
 # ##### Salvando o arquivo em parquet na camada prata
     df_estado.to_parquet(ARQUIVO_PRATA / "estados.parquet", index=False)
+    
