@@ -37,8 +37,10 @@ if __name__ == "__main__":
     df_municipio = df_municipio.rename(columns={"id": "id_municipio", "nome": "nome_municipio" , "microrregiao.mesorregiao.UF.id":"id_uf"})
     df_municipio = df_municipio[["id_municipio", "nome_municipio" , "id_uf"]]
     #Tratamento de dados:
+    df_municipio["id_municipio"] = df_municipio["id_municipio"].astype(str).str[1:]
     df_municipio["id_municipio"] = pd.to_numeric(df_municipio["id_municipio"], errors="coerce").astype("Int64")
     df_municipio["id_uf"] = pd.to_numeric(df_municipio["id_uf"], errors="coerce").astype("Int64") 
+   
 # ##### Salvando o arquivo em parquet na camada prata
     df_municipio.to_parquet(ARQUIVO_PRATA / "municipios.parquet", index=False)
     df_data_quality = data_quality(df_municipio)

@@ -41,6 +41,7 @@ if __name__ == "__main__":
     df_sus = lendo_dados_sus()
     df_estab = df_sus[["CO_IBGE", "NU_CNPJ", "CO_NATUREZA_JUR", "NO_FANTASIA" ]]
     df_estab = df_estab.rename(columns={"CO_IBGE": "id_municipio", "NU_CNPJ": "cnpj", "CO_NATUREZA_JUR": "cd_tipo", "NO_FANTASIA": "nome_fantasia"})
+    df_estab["id_municipio"] = pd.to_numeric(df_estab["id_municipio"], errors="coerce").astype("Int64")
     df_estab = df_estab[df_estab["cd_tipo"].isin(CODIGOS_ADM_PUBLICA)]
   
     df_estab.to_parquet(PRATA_DIR / "estabelecimentos_sus.parquet", index=False)
