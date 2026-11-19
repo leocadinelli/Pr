@@ -1,6 +1,5 @@
 
 from pathlib import Path
-import requests
 import pandas as pd
 import pyarrow
 
@@ -10,6 +9,7 @@ BASE = Path(__file__).resolve().parent.parent.parent
 
 ARQUIVO_BRONZE = BASE / "DATA" / "Bronze"
 ARQUIVO_PRATA = BASE / "DATA" / "Prata"
+ARQUIVO_PRATA.mkdir(parents=True, exist_ok=True)
 
    
 # ################### Função para extrair os municpios

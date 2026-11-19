@@ -3,8 +3,9 @@ from pathlib import Path
 
 # 1. Definição dos caminhos das pastas
 BASE = Path(__file__).resolve().parent.parent.parent
-PRATA_DIR = BASE / "Data" / "Prata"   
-OURO_DIR = BASE / "Data" / "Ouro"
+PRATA_DIR = BASE / "DATA" / "Prata"   
+OURO_DIR = BASE / "DATA" / "Ouro"
+OURO_DIR.mkdir(parents=True, exist_ok=True)
 
 
 
@@ -75,4 +76,4 @@ df_ouro_por_municipio.to_parquet(
     index=False
 )
 
-print(df_ouro_por_municipio )
+

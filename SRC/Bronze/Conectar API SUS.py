@@ -7,6 +7,7 @@ from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent.parent
 BRONZE_DIR = BASE / "DATA" / "Bronze"
+BRONZE_DIR.mkdir(parents=True, exist_ok=True)
 
 
 

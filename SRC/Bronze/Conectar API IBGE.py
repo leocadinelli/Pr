@@ -12,7 +12,10 @@ API_URL = (
 )
 
 ### Definindo as camadas:
-OUTPUT_BRONZE = Path("C:\\Projeto 3 FT\\DATA\\Bronze") 
+
+BASE = Path(__file__).resolve().parent.parent.parent
+OUTPUT_BRONZE = BASE / "DATA" / "Bronze"
+OUTPUT_BRONZE.mkdir(parents=True, exist_ok=True)
 
    
 # ################### Função para extrair os municpios
