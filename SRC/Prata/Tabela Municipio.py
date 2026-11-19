@@ -20,6 +20,15 @@ def parquet_municipios():
 
     return dados
 
+def data_quality(df):
+    resumo = pd.DataFrame({
+        "Tipo": df.dtypes.astype(str),
+        "Nulos": df.isna().sum(),
+        "% Nulos": (df.isna().mean() * 100).round(2),
+        "Únicos": df.nunique()
+    })
+    return resumo
+
 # ###############  executando a função de salvar os dados em parquet na camada bronze 
 if __name__ == "__main__":
 
@@ -32,7 +41,10 @@ if __name__ == "__main__":
     df_municipio["id_uf"] = pd.to_numeric(df_municipio["id_uf"], errors="coerce").astype("Int64") 
 # ##### Salvando o arquivo em parquet na camada prata
     df_municipio.to_parquet(ARQUIVO_PRATA / "municipios.parquet", index=False)
+    df_data_quality = data_quality(df_municipio)
+    df_data_quality.to_parquet(ARQUIVO_PRATA / "data_quality_municipios.parquet", index=False)
     #print(df_municipio)
+
 
     
 

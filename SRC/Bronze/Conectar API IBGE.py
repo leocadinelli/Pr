@@ -1,8 +1,10 @@
 
+from datetime import time
 from pathlib import Path
 import requests
 import pandas as pd
 import pyarrow
+import time
 
 API_URL = (
     "https://servicodados.ibge.gov.br/"
@@ -14,23 +16,25 @@ OUTPUT_BRONZE = Path("C:\\Projeto 3 FT\\DATA\\Bronze")
 
    
 # ################### Função para extrair os municpios
-def extrair_municipios():
+def extrair_municipios(tentativas = 3 , espera = 2):
 
-    print("Consultando à API do IBGE...")
+    for tentativa in range(1,tentativas + 1):
+        try:
+            print(f"Tentativa {tentativa} de {tentativas}...")
+            time.sleep(1)
+            response = requests.get(API_URL,timeout=60)
+            response.raise_for_status
+            dados = response.json()
 
-    response = requests.get(
-        API_URL,
-        timeout=60
-    )
-
-    response.raise_for_status() # Alerta para caso de erro na requisição
-
-    dados = response.json()
-
-    print(f"Registros recebidos: {len(dados)}")
-
-    return dados
-
+            return dados
+        except requests.exceptions.RequestException as e:
+            print(f"Erro na tentativa {tentativa}: {e}")
+            if tentativa < tentativas:
+                print(f"Aguarde {espera} segundos antes da próxima tentativa...")
+                time.sleep(espera)
+            else:
+                print("Total de tentativas atingido")
+                raise
 # ###############  executando a função de salvar os dados em parquet na camada bronze 
 if __name__ == "__main__":
 

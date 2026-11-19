@@ -19,6 +19,16 @@ def parquet_estado():
 
     return dados
 
+
+def data_quality(df):
+    resumo = pd.DataFrame({
+        "Tipo": df.dtypes.astype(str),
+        "Nulos": df.isna().sum(),
+        "% Nulos": (df.isna().mean() * 100).round(2),
+        "Únicos": df.nunique()
+    })
+    return resumo
+
 # ###############  executando a função de salvar os dados em parquet na camada bronze 
 if __name__ == "__main__":
 
@@ -33,4 +43,6 @@ if __name__ == "__main__":
 
 # ##### Salvando o arquivo em parquet na camada prata
     df_estado.to_parquet(ARQUIVO_PRATA / "estados.parquet", index=False)
+    df_data_quality = data_quality(df_estado)
+    df_data_quality.to_parquet(ARQUIVO_PRATA / "data_quality_estados.parquet", index=False)
     

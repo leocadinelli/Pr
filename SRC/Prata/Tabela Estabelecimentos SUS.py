@@ -8,7 +8,8 @@ import pyarrow
 ### Definindo as camadas:
 BASE = Path(__file__).resolve().parent.parent.parent
 BRONZE_DIR = BASE / "DATA" / "Bronze"
-PRATA_DIR = BASE / "DATA" / "Bronze"
+PRATA_DIR = BASE / "DATA" / "Prata"
+# Aqui são os códigos de natureza jurídica que representam a administração pública, conforme a tabela do SUS. 
 CODIGOS_ADM_PUBLICA = [
     "1000", "1015", "1023", "1031", "1040", "1058", "1066", "1074",
     "1082", "1104", "1112", "1120", "1139", "1147", "1155", "1163",
@@ -28,7 +29,7 @@ def lendo_dados_sus():
 
 def data_quality(df):
     resumo = pd.DataFrame({
-        "Tipo": df.dtypes,
+        "Tipo": df.dtypes.astype(str),
         "Nulos": df.isna().sum(),
         "% Nulos": (df.isna().mean() * 100).round(2),
         "Únicos": df.nunique()
