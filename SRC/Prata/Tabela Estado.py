@@ -6,8 +6,9 @@ import pyarrow
 
 
 ### Definindo as camadas:
-ARQUIVO_BRONZE = Path("C:\\Projeto 3 FT\\DATA\\Bronze") 
-ARQUIVO_PRATA = Path("C:\\Projeto 3 FT\\DATA\\Prata") 
+BASE = Path(__file__).resolve().parent.parent.parent
+ARQUIVO_BRONZE = BASE / "DATA" / "Bronze"
+ARQUIVO_PRATA = BASE / "DATA" / "Prata"
 
    
 # ################### Função para extrair os municpios

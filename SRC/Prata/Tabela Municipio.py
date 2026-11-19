@@ -6,8 +6,10 @@ import pyarrow
 
 
 ### Definindo as camadas:
-ARQUIVO_BRONZE = Path("C:\\Projeto 3 FT\\DATA\\Bronze") 
-ARQUIVO_PRATA = Path("C:\\Projeto 3 FT\\DATA\\Prata") 
+BASE = Path(__file__).resolve().parent.parent.parent
+
+ARQUIVO_BRONZE = BASE / "DATA" / "Bronze"
+ARQUIVO_PRATA = BASE / "DATA" / "Prata"
 
    
 # ################### Função para extrair os municpios
@@ -30,7 +32,7 @@ if __name__ == "__main__":
     df_municipio["id_uf"] = pd.to_numeric(df_municipio["id_uf"], errors="coerce").astype("Int64") 
 # ##### Salvando o arquivo em parquet na camada prata
     df_municipio.to_parquet(ARQUIVO_PRATA / "municipios.parquet", index=False)
-    print(df_municipio)
+    #print(df_municipio)
 
     
 
