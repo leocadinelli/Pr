@@ -30,7 +30,7 @@ def data_quality(df):
     return resumo
 
 # ###############  executando a função de salvar os dados em parquet na camada bronze 
-if __name__ == "__main__":
+def run():
 
     df_estado = parquet_estado()
     df_estado = pd.json_normalize(df_estado.to_dict(orient="records"))
@@ -45,4 +45,7 @@ if __name__ == "__main__":
     df_estado.to_parquet(ARQUIVO_PRATA / "estados.parquet", index=False)
     df_data_quality = data_quality(df_estado)
     df_data_quality.to_parquet(ARQUIVO_PRATA / "data_quality_estados.parquet", index=False)
-    
+
+
+if __name__ == "__main__":
+    run()

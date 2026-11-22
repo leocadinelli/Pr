@@ -30,10 +30,11 @@ def data_quality(df):
     return resumo
 
 # ###############  executando a função de salvar os dados em parquet na camada bronze 
-if __name__ == "__main__":
+def run():
 
     df_municipio = parquet_municipios()
     df_municipio = pd.json_normalize(df_municipio.to_dict(orient="records"))
+    print(df_municipio.head())
     df_municipio = df_municipio.rename(columns={"id": "id_municipio", "nome": "nome_municipio" , "microrregiao.mesorregiao.UF.id":"id_uf"})
     df_municipio = df_municipio[["id_municipio", "nome_municipio" , "id_uf"]]
     #Tratamento de dados:
@@ -45,7 +46,9 @@ if __name__ == "__main__":
     df_municipio.to_parquet(ARQUIVO_PRATA / "municipios.parquet", index=False)
     df_data_quality = data_quality(df_municipio)
     df_data_quality.to_parquet(ARQUIVO_PRATA / "data_quality_municipios.parquet", index=False)
-    #print(df_municipio)
+
+if __name__ == "__main__":
+    run() 
 
 
     

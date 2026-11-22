@@ -35,8 +35,8 @@ def data_quality(df):
     })
     return resumo
 
-if __name__ == "__main__":
 
+def run():
     df_sus = lendo_dados_sus()
     df_estab = df_sus[["CO_IBGE", "NU_CNPJ", "CO_NATUREZA_JUR", "NO_FANTASIA" ]]
     df_estab = df_estab.rename(columns={"CO_IBGE": "id_municipio", "NU_CNPJ": "cnpj", "CO_NATUREZA_JUR": "cd_tipo", "NO_FANTASIA": "nome_fantasia"})
@@ -48,7 +48,8 @@ if __name__ == "__main__":
     print(df_quality)
     df_quality.to_parquet(PRATA_DIR / "data_quality_estabelecimentos_sus.parquet", index=False)
   
-    
+if __name__ == "__main__":
+    run()   
     
   
             

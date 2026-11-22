@@ -38,14 +38,17 @@ def extrair_municipios(tentativas = 3 , espera = 2):
             else:
                 print("Total de tentativas atingido")
                 raise
+
+def run():
+      dados_api = extrair_municipios()
+      # Tabela Municípios
+      df_municipios = pd.DataFrame(dados_api)
+      caminho_arquivo_municipios = OUTPUT_BRONZE / "municipios_bruto_IBGE.parquet"
+      df_municipios.to_parquet(caminho_arquivo_municipios, index=False)
+
 # ###############  executando a função de salvar os dados em parquet na camada bronze 
 if __name__ == "__main__":
 
-    dados_api = extrair_municipios()
-    
-    # Tabela Municípios
-    df_municipios = pd.DataFrame(dados_api)
-    caminho_arquivo_municipios = OUTPUT_BRONZE / "municipios_bruto_IBGE.parquet"
-    df_municipios.to_parquet(caminho_arquivo_municipios, index=False)
+    run()
 
 
