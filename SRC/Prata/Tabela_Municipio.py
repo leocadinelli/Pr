@@ -46,6 +46,7 @@ def run():
     df_municipio.to_parquet(ARQUIVO_PRATA / "municipios.parquet", index=False)
     df_data_quality = data_quality(df_municipio)
     df_data_quality.to_parquet(ARQUIVO_PRATA / "data_quality_municipios.parquet", index=False)
+    df_data_quality.to_csv(BASE / "Outputs" / "Outputs" / "data_quality_municipios.csv", index=False)
 
 if __name__ == "__main__":
     run() 

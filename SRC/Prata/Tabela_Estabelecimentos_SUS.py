@@ -47,6 +47,7 @@ def run():
     df_quality = data_quality(df_estab)
     print(df_quality)
     df_quality.to_parquet(PRATA_DIR / "data_quality_estabelecimentos_sus.parquet", index=False)
+    df_quality.to_csv(BASE / "data_quality_estabelecimentos_sus.csv", index=False)
   
 if __name__ == "__main__":
     run()   

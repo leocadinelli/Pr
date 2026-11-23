@@ -45,7 +45,7 @@ def run():
     df_estado.to_parquet(ARQUIVO_PRATA / "estados.parquet", index=False)
     df_data_quality = data_quality(df_estado)
     df_data_quality.to_parquet(ARQUIVO_PRATA / "data_quality_estados.parquet", index=False)
-
-
+    df_data_quality.to_csv(BASE / "Outputs"/ "data_quality_estados.csv", index=False)
+    
 if __name__ == "__main__":
     run()

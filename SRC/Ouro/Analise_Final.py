@@ -22,7 +22,7 @@ def run():
         how="left"
     )
 
-    # Segundo: une Estabelecimentos com Municipios 
+    # Estabelecimentos com Municipios 
     df_ouro_detalhado = pd.merge(
         df_estab,
         df_localidades[["id_municipio", "nome_municipio", "id_uf", "nm_uf"]],
@@ -35,11 +35,10 @@ def run():
     sem_municipio = df_ouro_detalhado["nome_municipio"].isna().sum()
 
 
+
     # Tabela Base analítica 
     df_ouro_detalhado.to_parquet(
-        OURO_DIR / "ouro_estabelecimentos_completo.parquet", 
-        index=False
-    )
+        OURO_DIR / "ouro_estabelecimentos_completo.parquet",index=False)
 
     # Tabela Ouro 2: Resumo de estabelecimentos por Estado e Tipo
     df_ouro_por_uf = (
@@ -52,10 +51,8 @@ def run():
         .reset_index()
         .sort_values(by=["nm_uf", "qtd_estabelecimentos"], ascending=[True, False])
     )
-    df_ouro_por_uf.to_parquet(
-        OURO_DIR / "ouro_resumo_por_uf.parquet", 
-        index=False
-    )
+    df_ouro_por_uf.to_parquet(OURO_DIR / "ouro_resumo_por_uf.parquet", index=False)
+    df_ouro_por_uf.to_csv(BASE / "Outputs" / "ouro_resumo_por_uf.csv", index=False)
 
     # Tabela Ouro 3: Top Municípios por volume de unidades de saúde
     df_ouro_por_municipio = (
@@ -68,10 +65,8 @@ def run():
         .reset_index()
         .sort_values(by="total_unidades", ascending=False)
     )
-    df_ouro_por_municipio.to_parquet(
-        OURO_DIR / "ouro_ranking_municipios.parquet", 
-        index=False
-    )
+    df_ouro_por_municipio.to_parquet(OURO_DIR / "ouro_ranking_municipios.parquet", index=False)
+    df_ouro_por_municipio.to_csv(BASE / "Outputs" / "ouro_ranking_municipios.csv", index=False)
 
 if __name__ == "__main__":
     run()   
